@@ -7,6 +7,14 @@ jobs:
       - script: make ng
       - script: make ng.exe
       - script: scripts/travis_run.sh
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: nailgun-client/target
+          artifactName: nailgun-client-linux
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: nailgun-server/target
+          artifactName: nailgun-server-linux
   - job: macos
     pool:
       vmImage: 'macos-10.13'
@@ -18,8 +26,8 @@ jobs:
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: nailgun-client/target
-          artifactName: nailgun-client
+          artifactName: nailgun-client-macos
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: nailgun-server/target
-          artifactName: nailgun-server
+          artifactName: nailgun-server-macos
