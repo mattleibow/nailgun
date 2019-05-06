@@ -1,16 +1,25 @@
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-  - script: sudo apt-get install -y default-jdk python mingw-w64
-  - script: make ng
-  - script: make ng.exe
-  - script: scripts/travis_run.sh
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: nailgun-client/target
-      artifactName: nailgun-client
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: nailgun-server/target
-      artifactName: nailgun-server
+jobs:
+  - job: linux
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - script: sudo apt-get install -y default-jdk python mingw-w64
+      - script: make ng
+      - script: make ng.exe
+      - script: scripts/travis_run.sh
+  - job: macos
+    pool:
+      vmImage: 'macos-10.13'
+    steps:
+      - script: brew install mingw-w64
+      - script: make ng
+      - script: make ng.exe WIN32_CC=/usr/local/bin/i686-w64-mingw32-gcc
+      - script: mvn package
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: nailgun-client/target
+          artifactName: nailgun-client
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: nailgun-server/target
+          artifactName: nailgun-server
