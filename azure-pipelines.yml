@@ -2,7 +2,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - script: apt install -y oracle-java8-installer python mingw-w64
+  - script: apt-get install -y oracle-java8-installer python mingw-w64
   - script: make ng
   - script: make ng.exe
   - script: scripts/travis_run.sh
