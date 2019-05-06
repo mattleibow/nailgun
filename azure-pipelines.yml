@@ -6,3 +6,11 @@ steps:
   - script: make ng
   - script: make ng.exe
   - script: scripts/travis_run.sh
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: nailgun-client/target
+      artifactName: nailgun-client
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: nailgun-server/target
+      artifactName: nailgun-server
